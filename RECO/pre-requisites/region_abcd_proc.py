@@ -39,29 +39,8 @@ class ElectronChannel(processor.ProcessorABC):
     def __init__(self, year = "2018" ,region = "D",btagWP="M",pileUpWP = "L",jetPt=20.0, choice=1):
         
         '''
-        Enhanced ElectronChannel processor with two ABCD method choices
-        
-        Parameters:
-        ------------
-        year : str
-            Data Taking year (2016postVFP,2016preVFP ,2017, 2018)
-        
-        region : str
-            ABCD regions (A, B ,C ,D)
-
-        btag WP : str
-            B-tagging working point (L ,M ,T)
-
-        pileUp WP : str
-            PileUp jet ID working point (L ,M ,T)
-
-        jet_pt : float
-            Minimum pt of the jet required in the analysis
-
-        choice : int 
-            ABCD method choice:
-            --1. Cutbased Id vs mT (requires >=1 btags for all regions)
-            --2. Cutbased Id vs nbtags (requires mT >50 for all regions)
+        This code implements a Dask-based BDT for calculating the BDT scores and later for applying a cut on the BDT scores. It also calculates the reconstruction variables
+        which are later stored in a h5 file and these variables would serve as inputs for the minimization procedure. 
         '''
         # ------- Initialise the Model --------------#
         self.bdt_features = ["FW1","Sxz","Szz","AL","p2in","planarity","pT_Sum","nJet","delta_R","dphi_lb"]

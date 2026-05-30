@@ -27,7 +27,7 @@ This repository contains a **Coffea-based analysis framework** for the **Electro
 | 🧮 **ABCD QCD Estimation** | Data-driven QCD background estimation using the ABCD method |
 | 🤖 **BDT Classification** | XGBoost-based binary classifier for distinguishing top quark pair arising from qq̄(signal) from those of gg|
 | 📐 **χ² Kinematic Fitting** | Reconstruction of the top-quark and the antitop quark kinematic observables|
-| 📈 **TUnfold Unfolding** | Response matrix construction and unfolding pipeline for parton-level asymmetries (Will be updated in a few weeks) |
+| 📈 **TUnfold Unfolding** | Response matrix construction and unfolding pipeline for parton-level asymmetries (Work in progress)|
 
 ---
 
@@ -37,7 +37,7 @@ This repository contains a **Coffea-based analysis framework** for the **Electro
 NanoAOD Input
      │
      ▼
-Event & Object Selection (SFs, triggers, weights)
+Event & Object Selection 
      │
      ▼
 ABCD QCD Background Estimation
@@ -59,19 +59,18 @@ Aᵤ and A_d — Parton-level Asymmetries
 
 ## 📦 Dependencies
 
-The analysis requires the following Python packages:
+The following pre-requisites must be downloaded before running any scripts:
 
-| Package | Purpose |
-|---------|---------|
-| [coffea](https://coffea-hep.readthedocs.io/en/latest/) | columnar HEP analysis framework |
-| [awkward-array](https://pypi.org/project/awkward/) | jagged array operations |
-| [dask-awkward](https://docs.dask.org/en/latest/) | lazy/distributed execution |
-| [hist](https://hist.readthedocs.io/en/latest/) | histogram objects |
-| [correctionlib](https://cms-nanoaod.github.io/correctionlib/install.html) | scale factor corrections (b-tagging, PU, etc.) |
-| [numpy](https://numpy.org/) | numerical operations |
-| [pyarrow](https://pypi.org/project/pyarrow/) | parquet I/O for BDT inputs |
-| [xgboost](https://xgboost.readthedocs.io/) | gradient boosted decision trees |
-| [uproot](https://uproot.readthedocs.io/) | ROOT I/O in Python |
+| Package | 
+|---------|
+| [coffea](https://coffea-hep.readthedocs.io/en/latest/) |
+| [awkward-array](https://pypi.org/project/awkward/) |
+| [dask-awkward](https://docs.dask.org/en/latest/) |
+| [hist](https://hist.readthedocs.io/en/latest/) |
+| [correctionlib](https://cms-nanoaod.github.io/correctionlib/install.html)| 
+| [numpy](https://numpy.org/) | 
+| [xgboost](https://xgboost.readthedocs.io/) | 
+| [uproot](https://uproot.readthedocs.io/) |
 
 ---
 
@@ -111,6 +110,6 @@ pip install correctionlib hist xgboost
 
 <div align="center">
 
-**CMS Collaboration · Run 2 UL · Electron + Jets · tt̄ Charge Asymmetry**
+
 
 

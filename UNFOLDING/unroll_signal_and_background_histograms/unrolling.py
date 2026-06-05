@@ -119,14 +119,6 @@ def fill_th1(name, title, counts, errors, labels):
         h.GetXaxis().SetBinLabel(i + 1, lbl)
     return h
 
-# ─────────────────────────────────────────────
-# Write the nominal + systematic histograms for one
-# dataset, at one level ("reco" or "gen"):
-#
-#   <dataset>_<level>_nominal      content + MC stat error
-#   <dataset>_<level>_<source>Up   Up counts
-#   <dataset>_<level>_<source>Down Down counts
-# ─────────────────────────────────────────────
 def write_dataset_histograms(fout, dataset, level,
                               mtt, Nplus, Nminus, mtt_edges,
                               w_nominal, weights, lumi_scale,
@@ -224,7 +216,7 @@ for dataset, ds_info in UL_datasets.items():
 
     Nevt        = best_perm.shape[0]
     idx         = np.arange(Nevt)
-    charge_best = charge[idx, best_perm]
+    charge_best = charge[idx, np.maximum(best_perm, 0)] # safe indexing
     pgof        = np.exp(-0.5 * best_chi2)
     mask        = (pgof > pgof_cut) & (best_chi2 > 0)
 
@@ -236,6 +228,7 @@ for dataset, ds_info in UL_datasets.items():
     top_pz, antitop_pz = assign_top_antitop(cond, top_lep_pz, top_had_pz)
     top_E,  antitop_E  = assign_top_antitop(cond, top_lep_E,  top_had_E)
 
+    # RECO LEVEL - Mask is correctly applied here
     mtt_reco       = inv_mass(top_px + antitop_px,
                                top_py + antitop_py,
                                top_pz + antitop_pz,
@@ -256,34 +249,37 @@ for dataset, ds_info in UL_datasets.items():
         SYST_PAIRS, available_systs, reco_labels
     )
 
+    # GEN LEVEL - Mask is completely removed to keep truth inclusive
     if is_signal:
-        gen_top_px_best     = gen_top_pt[idx, best_perm]     * gen_top_cosphi[idx, best_perm]
-        gen_top_py_best     = gen_top_pt[idx, best_perm]     * gen_top_sinphi[idx, best_perm]
-        gen_top_pz_best     = gen_top_pt[idx, best_perm]     * gen_top_sinheta[idx, best_perm]
-        gen_top_E_best      = gen_top_E_arr[idx, best_perm]
+        safe_perm = np.maximum(best_perm, 0)
+        
+        gen_top_px_best     = gen_top_pt[idx, safe_perm]     * gen_top_cosphi[idx, safe_perm]
+        gen_top_py_best     = gen_top_pt[idx, safe_perm]     * gen_top_sinphi[idx, safe_perm]
+        gen_top_pz_best     = gen_top_pt[idx, safe_perm]     * gen_top_sinheta[idx, safe_perm]
+        gen_top_E_best      = gen_top_E_arr[idx, safe_perm]
 
-        gen_antitop_px_best = gen_antitop_pt[idx, best_perm] * gen_antitop_cosphi[idx, best_perm]
-        gen_antitop_py_best = gen_antitop_pt[idx, best_perm] * gen_antitop_sinphi[idx, best_perm]
-        gen_antitop_pz_best = gen_antitop_pt[idx, best_perm] * gen_antitop_sinheta[idx, best_perm]
-        gen_antitop_E_best  = gen_antitop_E_arr[idx, best_perm]
+        gen_antitop_px_best = gen_antitop_pt[idx, safe_perm] * gen_antitop_cosphi[idx, safe_perm]
+        gen_antitop_py_best = gen_antitop_pt[idx, safe_perm] * gen_antitop_sinphi[idx, safe_perm]
+        gen_antitop_pz_best = gen_antitop_pt[idx, safe_perm] * gen_antitop_sinheta[idx, safe_perm]
+        gen_antitop_E_best  = gen_antitop_E_arr[idx, safe_perm]
 
         mtt_gen       = inv_mass(gen_top_px_best     + gen_antitop_px_best,
                                   gen_top_py_best     + gen_antitop_py_best,
                                   gen_top_pz_best     + gen_antitop_pz_best,
-                                  gen_top_E_best      + gen_antitop_E_best)[mask]
-        y_top_gen     = rapidity(gen_top_E_best,     gen_top_pz_best)[mask]
-        y_antitop_gen = rapidity(gen_antitop_E_best, gen_antitop_pz_best)[mask]
+                                  gen_top_E_best      + gen_antitop_E_best)
+        y_top_gen     = rapidity(gen_top_E_best,     gen_top_pz_best)
+        y_antitop_gen = rapidity(gen_antitop_E_best, gen_antitop_pz_best)
 
         print("  --- Gen ---")
         Nplus_gen, Nminus_gen = make_Nplus_Nminus(
             y_top_gen, y_antitop_gen, Y_0, label="Gen")
 
-        w_nominal_gen = weights_masked["nominal"] * lumi_scale
+        w_nominal_gen = weights_full["nominal"] * lumi_scale
 
         write_dataset_histograms(
             fout, dataset, "gen",
             mtt_gen, Nplus_gen, Nminus_gen, gen_mtt_edges,
-            w_nominal_gen, weights_masked, lumi_scale,
+            w_nominal_gen, weights_full, lumi_scale,
             SYST_PAIRS, available_systs, gen_labels
         )
 
@@ -292,4 +288,4 @@ print(f"\n{'='*60}")
 print(f"All done. ROOT file: {outpath}")
 
 if np.any(best_perm == -1):
-    print("Warning: best_perm contains -1 values, indicating no valid permutation for some events.")
+    print("Warning: best_perm contains -1 values, indicating no valid permutation for some events. (Safely handled for Gen calculations)")

@@ -6,9 +6,6 @@ import ROOT
 
 ROOT.gROOT.SetBatch(True)
 
-# ─────────────────────────────────────────────
-# Config loader
-# ─────────────────────────────────────────────
 def load_config(config_path, era):
     with open(config_path, "r") as f:
         cfg = yaml.safe_load(f)
@@ -46,10 +43,6 @@ def load_config(config_path, era):
             FILE_SUFFIX, GEN_SUFFIX,
             reco_mtt_edges, gen_mtt_edges, datasets)
 
-
-# ─────────────────────────────────────────────
-# ERA selection — change only this line
-# ─────────────────────────────────────────────
 ERA         = "2018"
 CONFIG_PATH = "config_unfolding.yaml"
 
@@ -59,9 +52,6 @@ CONFIG_PATH = "config_unfolding.yaml"
 
 os.makedirs(OUTDIR, exist_ok=True)
 
-# ─────────────────────────────────────────────
-# Systematic sources — (up, down) weight-field pairs
-# ─────────────────────────────────────────────
 SYST_PAIRS = [
     ("pileupWeight_up",      "pileupWeight_down"),
     ("PreFiringWeight_up",   "PreFiringWeight_down"),
@@ -70,9 +60,6 @@ SYST_PAIRS = [
     ("pileUp_sf_up",         "pileUp_sf_down"),
 ]
 
-# ─────────────────────────────────────────────
-# Kinematics helpers
-# ─────────────────────────────────────────────
 def inv_mass(px, py, pz, E):
     return np.sqrt(np.maximum(E**2 - (px**2 + py**2 + pz**2), 0.0))
 
@@ -90,9 +77,7 @@ def make_Nplus_Nminus(y_top, y_antitop, Y_0, label=""):
     print(f"  [{label}] N+={np.sum(Nplus)}  N-={np.sum(Nminus)}")
     return Nplus, Nminus
 
-# ─────────────────────────────────────────────
-# Histogram-filling helpers
-# ─────────────────────────────────────────────
+
 def make_labels(mtt_edges):
     n, lbl = len(mtt_edges) - 1, []
     for sign in ["N_{+}", "N_{-}"]:
@@ -185,9 +170,6 @@ def write_dataset_histograms(fout, dataset, level,
           f"{n_written} systematic pair(s) (Up/Down)")
 
 
-# ─────────────────────────────────────────────
-# Output ROOT file
-# ─────────────────────────────────────────────
 outpath = os.path.join(OUTDIR, "unrolled_histograms_nom_and_sys.root")
 fout = ROOT.TFile(outpath, "RECREATE")
 print(f"Output ROOT file: {outpath}")
@@ -195,9 +177,7 @@ print(f"Output ROOT file: {outpath}")
 reco_labels = make_labels(reco_mtt_edges)
 gen_labels  = make_labels(gen_mtt_edges)
 
-# ─────────────────────────────────────────────
-# Loop over all datasets
-# ─────────────────────────────────────────────
+
 for dataset, ds_info in UL_datasets.items():
     xsec      = ds_info["xsec"]
     ngen      = ds_info["ngen"]
@@ -242,7 +222,6 @@ for dataset, ds_info in UL_datasets.items():
 
     lumi_scale = (xsec * LUMI) / ngen
 
-    # ── pgof mask ──────────────────────────────────────
     Nevt        = best_perm.shape[0]
     idx         = np.arange(Nevt)
     charge_best = charge[idx, best_perm]
@@ -251,7 +230,6 @@ for dataset, ds_info in UL_datasets.items():
 
     weights_masked = weights_full[mask]
 
-    # ── RECO kinematics ────────────────────────────────
     cond = charge_best > 0
     top_px, antitop_px = assign_top_antitop(cond, top_lep_px, top_had_px)
     top_py, antitop_py = assign_top_antitop(cond, top_lep_py, top_had_py)
@@ -278,7 +256,6 @@ for dataset, ds_info in UL_datasets.items():
         SYST_PAIRS, available_systs, reco_labels
     )
 
-    # ── GEN: signal only ───────────────────────────────
     if is_signal:
         gen_top_px_best     = gen_top_pt[idx, best_perm]     * gen_top_cosphi[idx, best_perm]
         gen_top_py_best     = gen_top_pt[idx, best_perm]     * gen_top_sinphi[idx, best_perm]

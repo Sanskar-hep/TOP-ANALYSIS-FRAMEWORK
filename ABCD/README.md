@@ -27,13 +27,25 @@ ABCD/
 
 ## Workflow Overview
 
-```mermaid
-flowchart LR
-    A[Coffea Outputs] --> B["Step 1\npre-requisites/\nABCD_runner.sh"]
-    B --> C["Step 2\nQCD_estimation/\ndifference_hist_new.py"]
-    C --> D["transfer_fac_bb.py\n(Transfer Factors)"]
-    D --> E["Step 3\nData_MC_agreement/\nconvert_qcd.py & convert_to_root.py"]
-    E --> F["run_plots_THStack.sh\nFinal Data–MC Plots"]
+```text
+Coffea Outputs
+      │
+      ▼
+Step 1: pre-requisites/
+        ABCD_runner.sh
+      │
+      ▼
+Step 2: QCD_estimation/
+        difference_hist_new.py  →  transfer_fac_bb.py
+        (Region A/C diffs)         (Transfer Factors)
+      │
+      ▼
+Step 3: Data_MC_agreement/
+        convert_qcd.py + convert_to_root.py
+      │
+      ▼
+        run_plots_THStack.sh
+        (Final Data–MC Plots)
 ```
 
 ---
@@ -123,6 +135,6 @@ Copy the transfer-factor JSON file generated in Step 2 into the `Data_MC_agreeme
 
 ## Notes
 
-- Regions **A** and **C** are the control regions used to derive the QCD transfer factor; Region **B** is typically the QCD-enriched region, and Region **D** (signal region) is where the estimate is applied.
+- Regions **A** and **C** are the control regions used to derive the QCD transfer factor; Region **B** is the region you will take the shape from and scale it by the transfer factor, and Region **D** (signal region) is where the estimate is implement.
 - Make sure the transfer-factor JSON from Step 2 is copied into `Data_MC_agreement/` **before** running the plotting script in Step 3.
 - Run scripts in order — each step depends on outputs from the previous one.

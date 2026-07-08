@@ -1,0 +1,295 @@
+# ============================================================
+# TUnfold Unfolding Analysis Configuration
+# tt̄ Charge Asymmetry (A_out) — Electron+Jets Channel
+# ============================================================
+
+# ─────────────────────────────────────────────
+# Physics parameters
+# ─────────────────────────────────────────────
+physics:
+  Y_0: 1.2                    # rapidity threshold for N+/N- definition
+  pgof_cut: 0.2               # kinematic fitter quality-of-fit threshold (exp(-chi2/2))
+
+# ─────────────────────────────────────────────
+# Era-specific settings
+# ─────────────────────────────────────────────
+eras:
+  2016preVFP:
+    lumi: 19520.0             # pb-1
+    outdir: /home/irfan/sanskar/ANALYSIS/UNFOLDING/unroll_signal_and_background_histograms/results_unrolled_histograms/2016preVFP
+    reco_dir: /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/results_top_lep_top_had/
+    gen_dir:  /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/
+    file_suffix: _reco_variables_for_minimisation_for_2016preVFP_fit_2016preVFP.h5
+    gen_suffix:  _reco_variables_for_minimisation_for_2016preVFP.h5
+
+  2016postVFP:
+    lumi: 16810.0             # pb-1
+    outdir: /home/irfan/sanskar/ANALYSIS/UNFOLDING/unroll_signal_and_background_histograms/results_unrolled_histograms/2016postVFP
+    reco_dir: /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/results_top_lep_top_had/
+    gen_dir:  /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/
+    file_suffix: _reco_variables_for_minimisation_for_2016postVFP_fit_2016postVFP.h5
+    gen_suffix:  _reco_variables_for_minimisation_for_2016postVFP.h5
+
+  2017:
+    lumi: 41529.0             # pb-1
+    outdir: /home/irfan/sanskar/ANALYSIS/UNFOLDING/unroll_signal_and_background_histograms/results_unrolled_histograms/2017
+    reco_dir: /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/results_top_lep_top_had/
+    gen_dir:  /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/
+    file_suffix: _reco_variables_for_minimisation_for_2017_fit_2017.h5
+    gen_suffix:  _reco_variables_for_minimisation_for_2017.h5
+
+  2018:
+    lumi: 59222.7416          # pb-1
+    outdir: /home/irfan/sanskar/ANALYSIS/UNFOLDING/unroll_signal_and_background_histograms/results_unrolled_histograms/2018
+    reco_dir: /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/results_top_lep_top_had/
+    gen_dir:  /home/irfan/sanskar/ANALYSIS/RECO/minimizer-scripts/
+    file_suffix: _reco_variables_for_minimisation_for_2018_fit_2018.h5
+    gen_suffix:  _reco_variables_for_minimisation_for_2018.h5
+
+# ─────────────────────────────────────────────
+# Binning
+# ─────────────────────────────────────────────
+binning:
+  reco:
+    mtt_edges: [300, 375, 450, 525, 600, 675, 750, 825, 900, 975, 1050, 1125, 1200]    
+    unit: GeV
+
+  gen:
+    mtt_edges: [300, 450, 600, 750, 900, 1050, 1200]     
+    unit: GeV
+
+# ─────────────────────────────────────────────
+# Output histogram names
+# ─────────────────────────────────────────────
+histograms:
+  reco:
+    name_pattern: "h_reco_{dataset}"           # {dataset} is substituted at runtime
+    title_pattern: "{dataset} Reco Unrolled;Bin;Events"
+    file_pattern:  "unrolled_reco_{dataset}"   # output PNG/PDF base name
+
+  gen:
+    name:  "h_gen_ttbar_SemiLeptonic"
+    title: "ttbar_SemiLeptonic Gen Unrolled;Bin;Events"
+    file:  "unrolled_gen_ttbar_SemiLeptonic"
+
+  root_output: "unrolled_histograms.root"      # single ROOT file per era
+
+# ─────────────────────────────────────────────
+# Datasets: xsec (pb) and ngen per era
+# ─────────────────────────────────────────────
+datasets:
+  ttbar_SemiLeptonic:
+    is_signal: true           # gen-level histogram filled only for this dataset
+    xsec:
+      2016preVFP:  365.5
+      2016postVFP: 365.5
+      2017:        365.5
+      2018:        366.3
+    ngen:
+      2016preVFP:  110787582
+      2016postVFP: 113578084
+      2017:        353594660
+      2018:        472977862
+
+  ttbar_FullyLeptonic:
+    is_signal: false
+    xsec:
+      2016preVFP:  88.5
+      2016postVFP: 88.5
+      2017:        88.5
+      2018:        88.5
+    ngen:
+      2016preVFP:  38869120
+      2016postVFP: 39720360
+      2017:        107952856
+      2018:        143830836
+
+  Tchannel:
+    is_signal: false
+    xsec:
+      2016preVFP:  136.0
+      2016postVFP: 136.0
+      2017:        134.2
+      2018:        134.2
+    ngen:
+      2016preVFP:  5903676
+      2016postVFP: 5959945
+      2017:        84539017
+      2018:        166637158
+
+  Tbarchannel:
+    is_signal: false
+    xsec:
+      2016preVFP:  81.0
+      2016postVFP: 81.0
+      2017:        80.0
+      2018:        80.0
+    ngen:
+      2016preVFP:  3675910
+      2016postVFP: 3682521
+      2017:        41755625
+      2018:        89985007
+
+  Schannel:
+    is_signal: false
+    xsec:
+      2016preVFP:  2.215836
+      2016postVFP: 2.215836
+      2017:        2.215836
+      2018:        2.215836
+    ngen:
+      2016preVFP:  9884864
+      2016postVFP: 9703656
+      2017:        19767972
+      2018:        12444591
+
+  tw_top:
+    is_signal: false
+    xsec:
+      2016preVFP:  39.65
+      2016postVFP: 39.65
+      2017:        39.65
+      2018:        39.65
+    ngen:
+      2016preVFP:  5387893
+      2016postVFP: 5550420
+      2017:        7945242
+      2018:        11270430
+
+  tw_antitop:
+    is_signal: false
+    xsec:
+      2016preVFP:  39.65
+      2016postVFP: 39.65
+      2017:        39.65
+      2018:        39.65
+    ngen:
+      2016preVFP:  5390918
+      2016postVFP: 5548414
+      2017:        7837952
+      2018:        10949620
+
+  DYJetsToLL:
+    is_signal: false
+    xsec:
+      2016preVFP:  6424.0
+      2016postVFP: 6424.0
+      2017:        6424.0
+      2018:        6424.0
+    ngen:
+      2016preVFP:  98159308
+      2016postVFP: 96531388
+      2017:        107111806
+      2018:        129037134
+
+  WJetsToLNu_0J:
+    is_signal: false
+    xsec:
+      2016preVFP:  52780.0
+      2016postVFP: 52780.0
+      2017:        52780.0
+      2018:        52780.0
+    ngen:
+      2016preVFP:  78278257
+      2016postVFP: 81051048
+      2017:        130597803
+      2018:        137259710
+
+  WJetsToLNu_1J:
+    is_signal: false
+    xsec:
+      2016preVFP:  8832.0
+      2016postVFP: 8832.0
+      2017:        8832.0
+      2018:        8832.0
+    ngen:
+      2016preVFP:  64373778
+      2016postVFP: 63473532
+      2017:        78714099
+      2018:        87594835
+
+  WJetsToLNu_2J:
+    is_signal: false
+    xsec:
+      2016preVFP:  3276.0
+      2016postVFP: 3276.0
+      2017:        3276.0
+      2018:        3276.0
+    ngen:
+      2016preVFP:  38040996
+      2016postVFP: 36623890
+      2017:        27830279
+      2018:        29028341
+
+  WWTo2L2Nu:
+    is_signal: false
+    xsec:
+      2016preVFP:  11.09
+      2016postVFP: 11.09
+      2017:        11.09
+      2018:        11.09
+    ngen:
+      2016preVFP:  1999000
+      2016postVFP: 1998000
+      2017:        7758000
+      2018:        9962019
+
+  WZTo2Q2L:
+    is_signal: false
+    xsec:
+      2016preVFP:  6.565
+      2016postVFP: 6.565
+      2017:        6.565
+      2018:        6.565
+    ngen:
+      2016preVFP:  9977284
+      2016postVFP: 9872272
+      2017:        28576996
+      2018:        17952068
+
+  ZZTo2L2Nu:
+    is_signal: false
+    xsec:
+      2016preVFP:  0.974
+      2016postVFP: 0.974
+      2017:        0.974
+      2018:        0.974
+    ngen:
+      2016preVFP:  8382900
+      2016postVFP: 8250600
+      2017:        39704675
+      2018:        16826232
+
+  ZZTo2Q2L:
+    is_signal: false
+    xsec:
+      2016preVFP:  3.676
+      2016postVFP: 3.676
+      2017:        3.676
+      2018:        3.676
+    ngen:
+      2016preVFP:  9882648
+      2016postVFP: 9897806
+      2017:        27988793
+      2018:        19082659
+
+# ─────────────────────────────────────────────
+# Plot styling
+# ─────────────────────────────────────────────
+plotting:
+  canvas_height: 700
+  canvas_width_per_bin: 100
+  canvas_width_min: 1400
+  bar_fill_color: 38         # ROOT kAzure+7
+  bar_line_color: 1          # ROOT kBlack
+  bar_line_width: 2
+  divider_line_color: 2      # ROOT kRed
+  divider_line_style: 2      # dashed
+  divider_line_width: 2
+  y_axis_title: "Events"
+  y_scale_factor: 1.20       # headroom above max bin
+  label_size: 0.038
+  label_option: "v"          # vertical x-axis labels
+  save_formats:
+    - pdf
+    - png

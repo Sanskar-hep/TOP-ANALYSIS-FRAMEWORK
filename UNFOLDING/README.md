@@ -22,7 +22,7 @@ UNFOLDING/
 
 ```bash
 cd unroll_signal_and_background_histograms
-python unrolling_final_june_ver2.py
+python3 unrolling_final_june_ver2.py
 ```
 
 Generates the unrolled `N+` and `N-` histograms in bins of `m_ttbar`, saved to a ROOT file.
@@ -31,7 +31,7 @@ Generates the unrolled `N+` and `N-` histograms in bins of `m_ttbar`, saved to a
 
 ```bash
 cd response_matrix
-python response_matrix.py
+python3 response_matrix.py
 ```
 
 Generates the nominal and systematic response matrices for the signal and background histograms.
@@ -48,7 +48,7 @@ Copy the ROOT files produced in steps 1 and 2 into `tunfold_pipeline/`.
 
 ```bash
 cd TUNFOLD_scripts
-python tunfold.py
+python3 tunfold.py
 ```
 
 Produces the unfolded distributions.

@@ -18,20 +18,20 @@ This repository contains a **Coffea-based analysis framework** for the **Electro
 
 ---
 
-## ✨ What This Framework Does
+## What This Framework Does
 
 | Module | Description |
 |--------|-------------|
-| 🔍 **Event & Object Selection** | Selection Cuts on electrons, Jets and MET|
-| 📊 **Data / MC Comparison** | Data-MC agreement studies for each era of Run2 |
-| 🧮 **ABCD QCD Estimation** | Data-driven QCD background estimation using the ABCD method |
-| 🤖 **BDT Classification** | XGBoost-based binary classifier for distinguishing top quark pair arising from qq̄(signal) from those of gg|
-| 📐 **χ² Kinematic Fitting** | Reconstruction of the top-quark and the antitop quark kinematic observables|
-| 📈 **TUnfold Unfolding** | Response matrix construction and unfolding pipeline for parton-level asymmetries (Work in progress)|
+|  **Event & Object Selection** | Selection Cuts on electrons, Jets and MET|
+|  **Data / MC Comparison** | Data-MC agreement studies for each era of Run2 |
+|  **ABCD QCD Estimation** | Data-driven QCD background estimation using the ABCD method |
+|  **BDT Classification** | XGBoost-based binary classifier for distinguishing top quark pair arising from qq̄(signal) from those of gg|
+|  **χ² Kinematic Fitting** | Reconstruction of the top-quark and the antitop quark kinematic observables|
+|  **TUnfold Unfolding** | Response matrix construction and unfolding pipeline for parton-level asymmetries (Work in progress)|
 
 ---
 
-## 🔬 Analysis Pipeline
+##  Analysis Pipeline
 
 ```
 NanoAOD Input
@@ -57,7 +57,7 @@ Aᵤ and A_d — Parton-level Asymmetries
 
 ---
 
-## 📦 Dependencies
+##  Dependencies
 
 The following pre-requisites must be downloaded before running any scripts:
 
@@ -74,7 +74,7 @@ The following pre-requisites must be downloaded before running any scripts:
 
 ---
 
-## 🚀 Installation
+##  Installation
 
 It is recommended to use a virtual environment (e.g., Conda).
 
@@ -99,7 +99,7 @@ pip install correctionlib hist xgboost
 ---
 
 
-## 📋 Dataset
+##  Dataset
 
 - **Format**: NanoAOD (CMS Run 2 Ultra-Legacy)
 - **Channel**: Electron + Jets
